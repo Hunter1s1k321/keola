@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keola - Romantic Journey</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Music Player (Auto-play & Looping) -->
+    <audio id="bgMusic" autoplay loop preload="auto">
+        <source src="assets/Firasat (Lirik) - Marcell.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-text-wrapper">
+                <h1 class="splash-title">This is for my one and only,</h1>
+                <p class="splash-subtitle">Keola</p>
+                <div class="splash-divider"></div>
+                <p class="splash-instruction">Click anywhere to continue</p>
+            </div>
+            <div class="splash-dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+        
+        <!-- Sparkle Elements -->
+        <div class="sparkle sparkle-1"></div>
+        <div class="sparkle sparkle-2"></div>
+        <div class="sparkle sparkle-3"></div>
+        <div class="sparkle sparkle-4"></div>
+        <div class="sparkle sparkle-5"></div>
+        <div class="sparkle sparkle-6"></div>
+        <div class="sparkle sparkle-7"></div>
+        <div class="sparkle sparkle-8"></div>
+        
+        <!-- Bubble Elements -->
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <div class="bubble bubble-4"></div>
+        <div class="bubble bubble-5"></div>
+        <div class="bubble bubble-6"></div>
+        <div class="bubble bubble-7"></div>
+        <div class="bubble bubble-8"></div>
+    </div>
+    
+    <!-- Music Control Button -->
+    <button class="music-toggle" id="musicToggle" title="Toggle Music">
+        <i class="fas fa-volume-up"></i>
+    </button>
+    
+    <!-- Gradient Background -->
+    <div class="gradient-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">✨ Keola</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section with Video Background -->
+    <section id="home" class="hero">
+        <!-- Video Background Parallax -->
+        <div class="hero-video-wrapper">
+            <video autoplay muted loop playsinline class="hero-video">
+                <source src="assets/keolavid.mp4" type="video/mp4">
+            </video>
+            <div class="hero-video-overlay"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="title">Keola</h1>
+                <p class="subtitle">A Journey Through Beauty & Romance</p>
+                <p class="description">Discover the elegance, warmth, and enchantment in every moment</p>
+                <button class="cta-btn">Explore Now</button>
+            </div>
+
+            <div class="hero-images">
+                <div class="image-container left-image">
+                    <img src="assets/keola1.jpg" alt="Keola - Beautiful Moment 1" loading="lazy">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="image-container right-image">
+                    <img src="assets/keola2.jpg" alt="Keola - Beautiful Moment 2" loading="lazy">
+                    <div class="image-overlay"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Particles -->
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </section>
+
+    <!-- Quote/Testimonial Section -->
+    <section id="quote" class="quote-section">
+        <div class="quote-container">
+            <div class="quote-wrapper">
+                <svg class="quote-icon" viewBox="0 0 100 100">
+                    <text x="50" y="80" font-size="80" text-anchor="middle">"</text>
+                </svg>
+                <p class="quote-text">Untuk Keola tersayang, aku cuma mau bilang terima kasih karena sudah menjadi bagian paling indah dalam hariku. Dari semua candaan kita di chat sampai momen-momen pelayanan bareng, aku selalu bersyukur punya kamu. Aku tahu kita punya tantangan tersendiri, tapi cara kamu peduli dan tetap setia di sampingku itu segalanya buat aku.</p>
+                <p class="quote-highlight">Tetaplah jadi Keola yang ceria, yang rambutnya selalu cantik kalau lagi terurai, dan yang punya hati selembut itu.</p>
+                <p class="quote-sign">I love you more than words can say, Kei. 💕</p>
+            </div>
+            <div class="quote-decoration">
+                <div class="quote-line"></div>
+                <div class="quote-dot"></div>
+                <div class="quote-line"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section with Masonry -->
+    <section id="gallery" class="gallery">
+        <!-- Gallery Video Background -->
+        <div class="gallery-video-wrapper">
+            <video autoplay muted loop playsinline class="gallery-video">
+                <source src="assets/keolavid2.mp4" type="video/mp4">
+            </video>
+            <div class="gallery-video-overlay"></div>
+        </div>
+        
+        <div class="section-header">
+            <h2>Gallery Moments</h2>
+            <p>Captured Beauty & Timeless Memories</p>
+        </div>
+        
+        <div class="gallery-masonry">
+            <!-- Keola1.jpg -->
+            <div class="gallery-item size-large">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola1.jpg" alt="Keola Beautiful Moment 1" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Essence of Beauty</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keola2.jpg -->
+            <div class="gallery-item size-medium">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola2.jpg" alt="Keola Beautiful Moment 2" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Romantic Vibes</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keola3.jpeg -->
+            <div class="gallery-item size-small">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola3.jpeg" alt="Keola Beautiful Moment 3" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Radiance</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keola4.jpeg -->
+            <div class="gallery-item size-medium">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola4.jpeg" alt="Keola Beautiful Moment 4" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Grace</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keola5.jpeg -->
+            <div class="gallery-item size-small">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola5.jpeg" alt="Keola Beautiful Moment 5" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Warmth</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keola6.jpeg -->
+            <div class="gallery-item size-large">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola6.jpeg" alt="Keola Beautiful Moment 6" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Pure Light</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keola7.jpeg -->
+            <div class="gallery-item size-small">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola7.jpeg" alt="Keola Beautiful Moment 7" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Serenity</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keola8.jpeg -->
+            <div class="gallery-item size-medium">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola8.jpeg" alt="Keola Beautiful Moment 8" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Elegance</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keola9.jpeg -->
+            <div class="gallery-item size-small">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola9.jpeg" alt="Keola Beautiful Moment 9" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Charm</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keola10.jpeg -->
+            <div class="gallery-item size-medium">
+                <div class="gallery-img-wrapper">
+                    <img src="assets/keola10.jpeg" alt="Keola Beautiful Moment 10" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p>Splendor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <!-- Sparkle Elements -->
+        <div class="about-sparkle sparkle-about-1"></div>
+        <div class="about-sparkle sparkle-about-2"></div>
+        <div class="about-sparkle sparkle-about-3"></div>
+        <div class="about-sparkle sparkle-about-4"></div>
+        <div class="about-sparkle sparkle-about-5"></div>
+        <div class="about-sparkle sparkle-about-6"></div>
+        
+        <!-- Bubble Elements -->
+        <div class="about-bubble bubble-about-1"></div>
+        <div class="about-bubble bubble-about-2"></div>
+        <div class="about-bubble bubble-about-3"></div>
+        <div class="about-bubble bubble-about-4"></div>
+        
+        <div class="about-content">
+            <h2>About Keola</h2>
+            <p>Bagi Keola, kejujuran dan kepercayaan adalah bahasa cinta yang paling nyata. Ia sangat menjunjung tinggi sebuah komitmen, terutama dalam menjaga hubungan jarak jauh kita; baginya, kesetiaan adalah janji suci untuk saling mendekap hati meski raga sedang tak saling bersentuhan. 🤍✨</p>
+            <p>Di balik sosoknya yang lembut, ia memiliki ketulusan luar biasa dalam melayani, membuktikan bahwa baginya hidup adalah tentang memberi dampak positif bagi sesama. Keola adalah bukti bahwa keindahan sejati muncul dari hati yang tulus, sebuah jiwa yang selalu memilih untuk tetap percaya dan berjuang demi orang yang ia cintai. 🌷🧸💖</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Keola</h3>
+                <p>A celebration of beauty, elegance, and timeless romance.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Follow Me</h4>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://facebook.com" target="_blank" title="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://tiktok.com" target="_blank" title="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://youtube.com" target="_blank" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Keola. All rights reserved. | Crafted with <span class="heart">💕</span> love</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
