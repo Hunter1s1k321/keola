@@ -1,0 +1,142 @@
+/* Design Tokens - Auto-generated */
+/* Do not edit directly - modify tokens.json instead */
+
+/* === PRIMITIVES === */
+:root {
+  --primitive-color-primary-50: #F2D3D3;
+  --primitive-color-primary-100: #F2D3D3;
+  --primitive-color-primary-200: #EED4D7;
+  --primitive-color-primary-300: #E5BFC3;
+  --primitive-color-primary-400: #DDA9AF;
+  --primitive-color-primary-500: #D4949B;
+  --primitive-color-primary-600: #8A5560;
+  --primitive-color-primary-700: #94686D;
+  --primitive-color-primary-800: #755155;
+  --primitive-color-primary-900: #553B3E;
+  --primitive-color-secondary-50: #F7DDB8;
+  --primitive-color-secondary-100: #F7DDB8;
+  --primitive-color-secondary-200: #F6E1CA;
+  --primitive-color-secondary-300: #F1D3AF;
+  --primitive-color-secondary-400: #EDC495;
+  --primitive-color-secondary-500: #E8B57A;
+  --primitive-color-secondary-600: #C48D58;
+  --primitive-color-secondary-700: #A27F55;
+  --primitive-color-secondary-800: #806443;
+  --primitive-color-secondary-900: #5D4831;
+  --primitive-color-accent-50: #F9F1EE;
+  --primitive-color-accent-100: #F4E2DC;
+  --primitive-color-accent-200: #E9C6B9;
+  --primitive-color-accent-300: #DDA997;
+  --primitive-color-accent-400: #D28D74;
+  --primitive-color-accent-500: #C77051;
+  --primitive-color-accent-600: #A95F45;
+  --primitive-color-accent-700: #8B4E39;
+  --primitive-color-accent-800: #6D3E2D;
+  --primitive-color-accent-900: #502D20;
+  --primitive-color-night-600: #6E5262;
+  --primitive-color-night-800: #3A2836;
+  --primitive-color-night-900: #1E1522;
+  --primitive-color-night-950: #120D16;
+  --primitive-color-paper-50: #F7EDE6;
+  --primitive-color-paper-300: #C9B6B9;
+  --primitive-color-dawn-100: #F8E6DF;
+  --primitive-color-dawn-900: #3A2430;
+  --primitive-font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --primitive-font-script: 'Great Vibes', 'Cormorant Garamond', cursive;
+  --primitive-font-label: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --primitive-fontSize-label: 0.75rem;
+  --primitive-fontSize-small: 0.9375rem;
+  --primitive-fontSize-body: 1.125rem;
+  --primitive-fontSize-lead: clamp(1.25rem, 1rem + 1vw, 1.6rem);
+  --primitive-fontSize-letter: clamp(1.4rem, 0.9rem + 1.9vw, 2.35rem);
+  --primitive-fontSize-chapter: clamp(2.6rem, 1.4rem + 5vw, 6rem);
+  --primitive-fontSize-name: clamp(5rem, 2rem + 13vw, 14rem);
+  --primitive-space-1: 0.5rem;
+  --primitive-space-2: 1rem;
+  --primitive-space-3: 1.5rem;
+  --primitive-space-4: 2.5rem;
+  --primitive-space-5: 4rem;
+  --primitive-space-6: 6rem;
+  --primitive-space-7: 9rem;
+  --primitive-space-8: 13rem;
+  --primitive-radius-sm: 6px;
+  --primitive-radius-md: 16px;
+  --primitive-radius-lg: 28px;
+  --primitive-radius-arch: 999px 999px 28px 28px;
+  --primitive-radius-full: 999px;
+  --primitive-duration-fast: 240ms;
+  --primitive-duration-base: 600ms;
+  --primitive-duration-slow: 1200ms;
+  --primitive-duration-breath: 1800ms;
+  --primitive-duration-drift: 14s;
+  --primitive-easing-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --primitive-easing-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --primitive-easing-in-out-sine: cubic-bezier(0.37, 0, 0.63, 1);
+}
+
+/* === SEMANTIC === */
+:root {
+  --color-bg: #120D16;
+  --color-surface: #1E1522;
+  --color-dusk: #3A2836;
+  --color-horizon: #6E5262;
+  --color-text: #F7EDE6;
+  --color-text-muted: #C9B6B9;
+  --color-rose: #D4949B;
+  --color-rose-soft: #F2D3D3;
+  --color-rose-deep: #8A5560;
+  --color-candle: #E8B57A;
+  --color-candle-soft: #F7DDB8;
+  --color-candle-deep: #C48D58;
+  --color-ember: #C77051;
+  --color-dawn: #F8E6DF;
+  --color-dawn-text: #3A2430;
+  --color-focus: #E8B57A;
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-script: 'Great Vibes', 'Cormorant Garamond', cursive;
+  --font-label: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --text-label: 0.75rem;
+  --text-small: 0.9375rem;
+  --text-body: 1.125rem;
+  --text-lead: clamp(1.25rem, 1rem + 1vw, 1.6rem);
+  --text-letter: clamp(1.4rem, 0.9rem + 1.9vw, 2.35rem);
+  --text-chapter: clamp(2.6rem, 1.4rem + 5vw, 6rem);
+  --text-name: clamp(5rem, 2rem + 13vw, 14rem);
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-section: 9rem;
+  --space-chapter: 13rem;
+  --radius-sm: 6px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --radius-arch: 999px 999px 28px 28px;
+  --radius-full: 999px;
+  --motion-fast: 240ms;
+  --motion-base: 600ms;
+  --motion-slow: 1200ms;
+  --motion-breath: 1800ms;
+  --motion-drift: 14s;
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-sine: cubic-bezier(0.37, 0, 0.63, 1);
+}
+
+/* === COMPONENTS === */
+:root {
+  --button-bg: transparent;
+  --button-text: #F7EDE6;
+  --button-border: #D4949B;
+  --button-radius: 999px;
+  --button-min-height: 48px;
+  --frame-bg: #1E1522;
+  --frame-radius: 16px;
+  --frame-caption: #C9B6B9;
+  --chip-text: #E8B57A;
+  --chip-tracking: 0.32em;
+  --control-size: 52px;
+  --control-bg: #1E1522;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Keola — OG banner 1200x630</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Great+Vibes&family=Jost:wght@500&display=block" rel="stylesheet">
+<link rel="stylesheet" href="../../keolahtml/css/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    font-family: var(--font-display);
+    color: var(--color-text);
+    background:
+      radial-gradient(70% 70% at 78% 105%, color-mix(in srgb, var(--color-candle-deep) 60%, transparent), transparent 70%),
+      linear-gradient(180deg, var(--color-bg) 0%, var(--color-surface) 30%, var(--color-dusk) 62%, var(--color-rose-deep) 100%);
+  }
+  .stars {
+    position: absolute; inset: 0; opacity: .8;
+    background-image:
+      radial-gradient(1.4px 1.4px at 8% 14%, var(--color-text) 50%, transparent 51%),
+      radial-gradient(1px 1px at 22% 38%, var(--color-text) 50%, transparent 51%),
+      radial-gradient(1.6px 1.6px at 41% 9%, var(--color-candle-soft) 50%, transparent 51%),
+      radial-gradient(1px 1px at 52% 30%, var(--color-text) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 63% 16%, var(--color-text) 50%, transparent 51%),
+      radial-gradient(1px 1px at 92% 12%, var(--color-text) 50%, transparent 51%),
+      radial-gradient(1.4px 1.4px at 96% 46%, var(--color-candle-soft) 50%, transparent 51%),
+      radial-gradient(1px 1px at 12% 70%, var(--color-text) 50%, transparent 51%),
+      radial-gradient(1px 1px at 35% 82%, var(--color-text) 50%, transparent 51%);
+  }
+  .glow {
+    position: absolute; right: 70px; top: 40px; width: 560px; height: 560px; border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-candle) 38%, transparent) 0%, color-mix(in srgb, var(--color-rose) 16%, transparent) 40%, transparent 68%);
+  }
+  .arch {
+    position: absolute; right: 150px; top: 70px; width: 380px; height: 520px;
+    border-radius: 999px 999px 26px 26px; overflow: hidden;
+    box-shadow: 0 40px 100px -20px color-mix(in srgb, var(--color-ember) 60%, transparent), 0 0 0 1px color-mix(in srgb, var(--color-rose-soft) 25%, transparent);
+  }
+  .arch img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; filter: saturate(.9) sepia(.08); }
+  .arch::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--color-bg) 55%, transparent)); }
+  .copy { position: absolute; left: 90px; top: 0; bottom: 0; width: 560px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+  .chip { font-family: var(--font-label); font-size: 15px; letter-spacing: .34em; text-transform: uppercase; color: var(--color-candle); display: flex; align-items: center; gap: 16px; }
+  .chip::before { content: ""; width: 44px; height: 1px; background: currentColor; }
+  .eyebrow { font-style: italic; font-size: 34px; color: var(--color-text-muted); margin-top: 18px; }
+  .name { font-family: var(--font-script); font-size: 196px; line-height: .9; margin: 34px 0 6px -10px; text-shadow: 0 0 50px color-mix(in srgb, var(--color-rose) 55%, transparent); }
+  .sub { font-style: italic; font-size: 30px; color: var(--color-rose-soft); }
+  .mark { position: absolute; left: 90px; bottom: 48px; display: flex; align-items: center; gap: 14px; font-family: var(--font-label); font-size: 15px; letter-spacing: .2em; color: var(--color-text-muted); }
+  .mark svg { width: 34px; height: 34px; fill: none; stroke: var(--color-text); stroke-width: 2; stroke-linecap: round; }
+  .mark .moon { stroke: var(--color-rose); }
+</style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="glow"></div>
+  <div class="arch"><img src="../../keolahtml/assets/img/keola-10.webp" alt=""></div>
+  <div class="copy">
+    <p class="chip">Senja ke Fajar</p>
+    <p class="eyebrow">This is for my one and only,</p>
+    <p class="name">Keola</p>
+    <p class="sub">sebuah surat kecil, ditulis pelan-pelan</p>
+  </div>
+  <div class="mark">
+    <svg viewBox="0 0 64 64"><path class="moon" d="M47.5 12.6A24 24 0 1 0 51.4 47"/><path d="M25 18.5v27M40.5 18.5c-4.6 6.2-9.4 10.6-15.2 13.6M28.6 30.6c5 3.4 8.6 8.4 12.6 15"/></svg>
+    keola.netlify.app
+  </div>
+</body>
+</html>

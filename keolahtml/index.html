@@ -1,320 +1,382 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="no-js">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keola - Romantic Journey</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Keola — Senja ke Fajar</title>
+    <meta name="description" content="Sebuah surat kecil untuk Keola, ditulis pelan-pelan dari senja sampai fajar.">
+    <meta name="theme-color" content="#120D16">
+    <meta name="color-scheme" content="dark">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://keola.netlify.app/">
+    <meta property="og:title" content="Keola — Senja ke Fajar">
+    <meta property="og:description" content="This is for my one and only. Sebuah surat kecil untuk Keola.">
+    <meta property="og:image" content="https://keola.netlify.app/assets/og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Great+Vibes&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="assets/video/kafe-poster.webp">
+
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script>
+        (function () {
+            var d = document.documentElement, forced = false;
+            d.classList.replace('no-js', 'js');
+            try { forced = localStorage.getItem('keola-motion') === 'full' || /[?&]gerak=penuh/.test(location.search); } catch (e) {}
+            if (forced) d.classList.add('motion-forced');
+            if (forced || !matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion');
+        })();
+    </script>
 </head>
-<body>
-    <!-- Music Player (Auto-play & Looping) -->
-    <audio id="bgMusic" autoplay loop preload="auto">
-        <source src="assets/Firasat (Lirik) - Marcell.mp3" type="audio/mpeg">
-    </audio>
-    
-    <!-- Splash Screen -->
-    <div id="splashScreen" class="splash-screen">
-        <div class="splash-content">
-            <div class="splash-text-wrapper">
-                <h1 class="splash-title">This is for my one and only,</h1>
-                <p class="splash-subtitle">Keola</p>
-                <div class="splash-divider"></div>
-                <p class="splash-instruction">Click anywhere to continue</p>
-            </div>
-            <div class="splash-dots">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </div>
-        
-        <!-- Sparkle Elements -->
-        <div class="sparkle sparkle-1"></div>
-        <div class="sparkle sparkle-2"></div>
-        <div class="sparkle sparkle-3"></div>
-        <div class="sparkle sparkle-4"></div>
-        <div class="sparkle sparkle-5"></div>
-        <div class="sparkle sparkle-6"></div>
-        <div class="sparkle sparkle-7"></div>
-        <div class="sparkle sparkle-8"></div>
-        
-        <!-- Bubble Elements -->
-        <div class="bubble bubble-1"></div>
-        <div class="bubble bubble-2"></div>
-        <div class="bubble bubble-3"></div>
-        <div class="bubble bubble-4"></div>
-        <div class="bubble bubble-5"></div>
-        <div class="bubble bubble-6"></div>
-        <div class="bubble bubble-7"></div>
-        <div class="bubble bubble-8"></div>
+<body class="is-locked">
+    <a class="skip-link" href="#surat">Langsung ke surat</a>
+
+    <!-- ===== Ambient layers (decorative) ===== -->
+    <div class="sky" aria-hidden="true">
+        <div class="sky__layer sky__layer--dusk"></div>
+        <div class="sky__layer sky__layer--night"></div>
+        <div class="sky__layer sky__layer--deep"></div>
+        <div class="sky__layer sky__layer--predawn"></div>
+        <div class="sky__layer sky__layer--dawn"></div>
     </div>
-    
-    <!-- Music Control Button -->
-    <button class="music-toggle" id="musicToggle" title="Toggle Music">
-        <i class="fas fa-volume-up"></i>
+    <canvas class="ambient" aria-hidden="true"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+    <div class="cursor" aria-hidden="true">
+        <span class="cursor__ring"><em>lihat</em></span>
+        <span class="cursor__dot"></span>
+    </div>
+
+    <!-- ===== Gate ===== -->
+    <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-hint">
+        <div class="gate__inner">
+            <p class="gate__eyebrow">This is for my one and only,</p>
+            <p class="gate__name script ink" id="gate-title">Keola</p>
+            <span class="gate__line" aria-hidden="true"></span>
+            <button class="btn btn--glow gate__open" id="gate-open" type="button">
+                <span class="btn__ring" aria-hidden="true"></span>
+                <span>Buka pelan-pelan</span>
+            </button>
+            <p class="gate__hint" id="gate-hint">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                <span>paling syahdu dengan suara</span>
+                <span class="gate__dot" aria-hidden="true">·</span>
+                <button class="link" id="gate-silent" type="button">masuk tanpa suara</button>
+            </p>
+            <p class="gate__motion" hidden>
+                <span class="gate__motion-text">Perangkatmu sedang meminta animasi minimal.</span>
+                <button class="link" type="button" data-motion-toggle>Nyalakan animasi penuh</button>
+            </p>
+        </div>
+    </div>
+
+    <!-- ===== Top bar ===== -->
+    <header class="topbar">
+        <a class="monogram" href="#senja" aria-label="Keola — kembali ke awal">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="monogram__moon" d="M47.5 12.6A24 24 0 1 0 51.4 47"/>
+                <path d="M25 18.5v27"/>
+                <path d="M40.5 18.5c-4.6 6.2-9.4 10.6-15.2 13.6"/>
+                <path d="M28.6 30.6c5 3.4 8.6 8.4 12.6 15"/>
+                <circle class="monogram__star" cx="51.6" cy="16.4" r="1.8"/>
+            </svg>
+        </a>
+        <nav class="chapters" aria-label="Bab">
+            <ol>
+                <li><a href="#senja" data-nav="senja"><span class="chapters__num">I</span><span class="chapters__name">Senja</span></a></li>
+                <li><a href="#surat" data-nav="surat"><span class="chapters__num">II</span><span class="chapters__name">Surat</span></a></li>
+                <li><a href="#jarak" data-nav="jarak"><span class="chapters__num">III</span><span class="chapters__name">Jarak</span></a></li>
+                <li><a href="#kenangan" data-nav="kenangan"><span class="chapters__num">IV</span><span class="chapters__name">Kenangan</span></a></li>
+                <li><a href="#tentang" data-nav="tentang"><span class="chapters__num">V</span><span class="chapters__name">Tentang</span></a></li>
+                <li><a href="#fajar" data-nav="fajar"><span class="chapters__num">VI</span><span class="chapters__name">Fajar</span></a></li>
+            </ol>
+        </nav>
+    </header>
+
+    <!-- ===== Music ===== -->
+    <button class="music" id="music" type="button" aria-pressed="false" aria-label="Putar lagu Firasat oleh Marcell">
+        <span class="music__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="music__meta" aria-hidden="true"><b>Firasat</b><small>Marcell</small></span>
     </button>
-    
-    <!-- Gradient Background -->
-    <div class="gradient-bg"></div>
-    
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="logo">✨ Keola</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#about">About</a></li>
-        </ul>
-    </nav>
+    <audio id="song" src="assets/audio/firasat.mp3" preload="none" loop></audio>
 
-    <!-- Hero Section with Video Background -->
-    <section id="home" class="hero">
-        <!-- Video Background Parallax -->
-        <div class="hero-video-wrapper">
-            <video autoplay muted loop playsinline class="hero-video">
-                <source src="assets/keolavid.mp4" type="video/mp4">
-            </video>
-            <div class="hero-video-overlay"></div>
-        </div>
+    <main id="main">
 
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="title">Keola</h1>
-                <p class="subtitle">A Journey Through Beauty & Romance</p>
-                <p class="description">Discover the elegance, warmth, and enchantment in every moment</p>
-                <button class="cta-btn">Explore Now</button>
-            </div>
+        <!-- I. Senja -->
+        <section class="hero chapter" id="senja" data-chapter="senja" aria-labelledby="hero-title" tabindex="-1">
+            <div class="hero__stage">
+                <div class="hero__aura" aria-hidden="true"></div>
 
-            <div class="hero-images">
-                <div class="image-container left-image">
-                    <img src="assets/keola1.jpg" alt="Keola - Beautiful Moment 1" loading="lazy">
-                    <div class="image-overlay"></div>
+                <div class="hero__layer" data-depth="0.35">
+                    <div class="hero__arch">
+                        <video class="hero__video" muted loop playsinline preload="metadata" poster="assets/video/kafe-poster.webp" aria-label="Video kenangan kita di kafe, 12 Desember 2025">
+                            <source src="assets/video/kafe.mp4" type="video/mp4">
+                        </video>
+                        <span class="hero__date" aria-hidden="true">12 · 12 · 2025</span>
+                    </div>
                 </div>
-                <div class="image-container right-image">
-                    <img src="assets/keola2.jpg" alt="Keola - Beautiful Moment 2" loading="lazy">
-                    <div class="image-overlay"></div>
+
+                <div class="hero__layer hero__layer--left" data-depth="0.8">
+                    <figure class="polaroid polaroid--left">
+                        <div class="polaroid__float">
+                            <img src="assets/img/keola-01-sm.webp" width="800" height="600" alt="Keola berkacamata, bertopang dagu sambil menatap ke samping" decoding="async">
+                        </div>
+                    </figure>
+                </div>
+
+                <div class="hero__layer hero__layer--right" data-depth="1.1">
+                    <figure class="polaroid polaroid--right">
+                        <div class="polaroid__float">
+                            <img src="assets/img/keola-02-sm.webp" width="701" height="800" alt="Strip photobooth: kita berdua dalam enam pose" decoding="async">
+                        </div>
+                    </figure>
                 </div>
             </div>
-        </div>
 
-        <!-- Floating Particles -->
-        <div class="particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
-    </section>
+            <p class="chip hero__chip">Bab I — Senja</p>
+            <div class="hero__copy">
+                <h1 class="hero__name script ink" id="hero-title">Keola</h1>
+                <p class="hero__sub">sebuah surat kecil, ditulis pelan-pelan untukmu</p>
+            </div>
 
-    <!-- Quote/Testimonial Section -->
-    <section id="quote" class="quote-section">
-        <div class="quote-container">
-            <div class="quote-wrapper">
-                <svg class="quote-icon" viewBox="0 0 100 100">
-                    <text x="50" y="80" font-size="80" text-anchor="middle">"</text>
+            <a class="scroll-cue" href="#surat"><span>gulir pelan-pelan</span><i aria-hidden="true"></i></a>
+        </section>
+
+        <!-- II. Surat -->
+        <section class="letter chapter" id="surat" data-chapter="surat" aria-labelledby="surat-title" tabindex="-1">
+            <span class="letter__thread" aria-hidden="true"></span>
+            <header class="chapter__head">
+                <p class="chip">Bab II — Surat</p>
+                <h2 class="chapter__title split-reveal" id="surat-title">Untuk Keola <em>tersayang,</em></h2>
+            </header>
+            <p class="letter__body" data-words>aku cuma mau bilang terima kasih karena sudah menjadi bagian paling indah dalam hariku. Dari semua candaan kita di chat sampai momen-momen pelayanan bareng, aku selalu bersyukur punya kamu. Aku tahu kita punya tantangan tersendiri, tapi cara kamu peduli dan tetap setia di sampingku itu segalanya buat aku.</p>
+            <p class="letter__highlight"><span>Tetaplah jadi Keola yang ceria, yang rambutnya selalu cantik kalau lagi terurai, dan yang punya hati selembut itu.</span></p>
+            <p class="letter__sign">— aku, yang selalu bersyukur punya kamu</p>
+        </section>
+
+        <!-- III. Jarak -->
+        <section class="distance chapter" id="jarak" data-chapter="jarak" aria-labelledby="jarak-title" tabindex="-1">
+            <div class="distance__stage">
+                <header class="distance__head">
+                    <p class="chip">Bab III — Jarak</p>
+                    <h2 class="visually-hidden" id="jarak-title">Jarak</h2>
+                </header>
+                <svg class="distance__sky" viewBox="0 0 1200 560" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="threadGrad" x1="0" x2="1" y1="0" y2="0">
+                            <stop offset="0" stop-color="var(--color-rose)"/>
+                            <stop offset="1" stop-color="var(--color-candle)"/>
+                        </linearGradient>
+                        <radialGradient id="starGlow">
+                            <stop offset="0" stop-color="var(--color-candle-soft)" stop-opacity="0.95"/>
+                            <stop offset="0.25" stop-color="var(--color-candle)" stop-opacity="0.45"/>
+                            <stop offset="1" stop-color="var(--color-rose)" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <path class="distance__halo" d="M240 330 C 400 170, 520 430, 640 290 S 860 150, 960 250"/>
+                    <path class="distance__thread" d="M240 330 C 400 170, 520 430, 640 290 S 860 150, 960 250"/>
+                    <g class="distance__nodes">
+                        <circle cx="330" cy="262" r="2.6"/>
+                        <circle cx="430" cy="276" r="2"/>
+                        <circle cx="520" cy="330" r="2.8"/>
+                        <circle cx="600" cy="320" r="2"/>
+                        <circle cx="690" cy="248" r="2.6"/>
+                        <circle cx="790" cy="214" r="2"/>
+                        <circle cx="880" cy="222" r="2.4"/>
+                    </g>
+                    <circle class="distance__spark" cx="240" cy="330" r="5"/>
+                    <g class="distance__star distance__star--a">
+                        <circle class="distance__glow" cx="240" cy="330" r="70" fill="url(#starGlow)"/>
+                        <circle class="distance__core" cx="240" cy="330" r="5.5"/>
+                        <text x="240" y="400">aku</text>
+                    </g>
+                    <g class="distance__star distance__star--b">
+                        <circle class="distance__glow" cx="960" cy="250" r="70" fill="url(#starGlow)"/>
+                        <circle class="distance__core" cx="960" cy="250" r="5.5"/>
+                        <text x="960" y="320">kamu</text>
+                    </g>
                 </svg>
-                <p class="quote-text">Untuk Keola tersayang, aku cuma mau bilang terima kasih karena sudah menjadi bagian paling indah dalam hariku. Dari semua candaan kita di chat sampai momen-momen pelayanan bareng, aku selalu bersyukur punya kamu. Aku tahu kita punya tantangan tersendiri, tapi cara kamu peduli dan tetap setia di sampingku itu segalanya buat aku.</p>
-                <p class="quote-highlight">Tetaplah jadi Keola yang ceria, yang rambutnya selalu cantik kalau lagi terurai, dan yang punya hati selembut itu.</p>
-                <p class="quote-sign">I love you more than words can say, Kei. 💕</p>
+                <div class="distance__lines">
+                    <p class="distance__line distance__line--1">Ada jarak di antara kita.</p>
+                    <p class="distance__line distance__line--2">Tapi kita memilih untuk <em>saling mendekap hati,</em><br>meski raga sedang tak saling bersentuhan.</p>
+                </div>
             </div>
-            <div class="quote-decoration">
-                <div class="quote-line"></div>
-                <div class="quote-dot"></div>
-                <div class="quote-line"></div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Gallery Section with Masonry -->
-    <section id="gallery" class="gallery">
-        <!-- Gallery Video Background -->
-        <div class="gallery-video-wrapper">
-            <video autoplay muted loop playsinline class="gallery-video">
-                <source src="assets/keolavid2.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-video-overlay"></div>
-        </div>
-        
-        <div class="section-header">
-            <h2>Gallery Moments</h2>
-            <p>Captured Beauty & Timeless Memories</p>
-        </div>
-        
-        <div class="gallery-masonry">
-            <!-- Keola1.jpg -->
-            <div class="gallery-item size-large">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola1.jpg" alt="Keola Beautiful Moment 1" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Essence of Beauty</p>
+        <!-- IV. Kenangan -->
+        <section class="gallery chapter" id="kenangan" data-chapter="kenangan" aria-labelledby="kenangan-title" tabindex="-1">
+            <div class="gallery__stage">
+                <header class="gallery__head">
+                    <div>
+                        <p class="chip">Bab IV — Kenangan</p>
+                        <h2 class="chapter__title split-reveal" id="kenangan-title">Potongan waktu <em>yang ingin kusimpan</em></h2>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Keola2.jpg -->
-            <div class="gallery-item size-medium">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola2.jpg" alt="Keola Beautiful Moment 2" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Romantic Vibes</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Keola3.jpeg -->
-            <div class="gallery-item size-small">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola3.jpeg" alt="Keola Beautiful Moment 3" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Radiance</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Keola4.jpeg -->
-            <div class="gallery-item size-medium">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola4.jpeg" alt="Keola Beautiful Moment 4" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Grace</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Keola5.jpeg -->
-            <div class="gallery-item size-small">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola5.jpeg" alt="Keola Beautiful Moment 5" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Warmth</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Keola6.jpeg -->
-            <div class="gallery-item size-large">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola6.jpeg" alt="Keola Beautiful Moment 6" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Pure Light</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Keola7.jpeg -->
-            <div class="gallery-item size-small">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola7.jpeg" alt="Keola Beautiful Moment 7" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Serenity</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Keola8.jpeg -->
-            <div class="gallery-item size-medium">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola8.jpeg" alt="Keola Beautiful Moment 8" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Elegance</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Keola9.jpeg -->
-            <div class="gallery-item size-small">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola9.jpeg" alt="Keola Beautiful Moment 9" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Charm</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Keola10.jpeg -->
-            <div class="gallery-item size-medium">
-                <div class="gallery-img-wrapper">
-                    <img src="assets/keola10.jpeg" alt="Keola Beautiful Moment 10" loading="lazy">
-                    <div class="gallery-overlay">
-                        <p>Splendor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <p class="gallery__count" aria-hidden="true"><span class="gallery__current">01</span><span class="gallery__total"> / 10</span></p>
+                </header>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <!-- Sparkle Elements -->
-        <div class="about-sparkle sparkle-about-1"></div>
-        <div class="about-sparkle sparkle-about-2"></div>
-        <div class="about-sparkle sparkle-about-3"></div>
-        <div class="about-sparkle sparkle-about-4"></div>
-        <div class="about-sparkle sparkle-about-5"></div>
-        <div class="about-sparkle sparkle-about-6"></div>
-        
-        <!-- Bubble Elements -->
-        <div class="about-bubble bubble-about-1"></div>
-        <div class="about-bubble bubble-about-2"></div>
-        <div class="about-bubble bubble-about-3"></div>
-        <div class="about-bubble bubble-about-4"></div>
-        
-        <div class="about-content">
-            <h2>About Keola</h2>
-            <p>Bagi Keola, kejujuran dan kepercayaan adalah bahasa cinta yang paling nyata. Ia sangat menjunjung tinggi sebuah komitmen, terutama dalam menjaga hubungan jarak jauh kita; baginya, kesetiaan adalah janji suci untuk saling mendekap hati meski raga sedang tak saling bersentuhan. 🤍✨</p>
-            <p>Di balik sosoknya yang lembut, ia memiliki ketulusan luar biasa dalam melayani, membuktikan bahwa baginya hidup adalah tentang memberi dampak positif bagi sesama. Keola adalah bukti bahwa keindahan sejati muncul dari hati yang tulus, sebuah jiwa yang selalu memilih untuk tetap percaya dan berjuang demi orang yang ia cintai. 🌷🧸💖</p>
-        </div>
-    </section>
+                <ol class="gallery__track">
+                    <li class="frame frame--wide" style="--avg:#5f5048">
+                        <button class="frame__btn" type="button" data-index="0" data-cursor aria-label="Perbesar foto 01, Teduh">
+                            <span class="frame__media"><img src="assets/img/keola-01-sm.webp" srcset="assets/img/keola-01-sm.webp 800w, assets/img/keola-01.webp 1080w" sizes="(min-width: 900px) 40vw, 88vw" width="1080" height="810" alt="Keola berkacamata, bertopang dagu sambil menatap ke samping" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>01</span>Teduh</p>
+                    </li>
+                    <li class="frame" style="--avg:#7d7d83">
+                        <button class="frame__btn" type="button" data-index="1" data-cursor aria-label="Perbesar foto 02, Kita">
+                            <span class="frame__media"><img src="assets/img/keola-02-sm.webp" srcset="assets/img/keola-02-sm.webp 701w, assets/img/keola-02.webp 947w" sizes="(min-width: 900px) 28vw, 88vw" width="947" height="1080" alt="Strip photobooth: kita berdua dalam enam pose" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>02</span>Kita</p>
+                    </li>
+                    <li class="frame" style="--avg:#434044">
+                        <button class="frame__btn" type="button" data-index="2" data-cursor aria-label="Perbesar foto 03, Perjalanan">
+                            <span class="frame__media"><img src="assets/img/keola-03-sm.webp" srcset="assets/img/keola-03-sm.webp 474w, assets/img/keola-03.webp 720w" sizes="(min-width: 900px) 28vw, 88vw" width="720" height="1215" alt="Swafoto Keola berkacamata di dalam mobil" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>03</span>Perjalanan</p>
+                    </li>
+                    <li class="frame" style="--avg:#a5a2a2">
+                        <button class="frame__btn" type="button" data-index="3" data-cursor aria-label="Perbesar foto 04, Anggun">
+                            <span class="frame__media"><img src="assets/img/keola-04-sm.webp" srcset="assets/img/keola-04-sm.webp 450w, assets/img/keola-04.webp 899w" sizes="(min-width: 900px) 28vw, 88vw" width="899" height="1599" alt="Keola berfoto di cermin kamar yang putih, memberi tanda peace" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>04</span>Anggun</p>
+                    </li>
+                    <li class="frame" style="--avg:#92745d">
+                        <button class="frame__btn" type="button" data-index="4" data-cursor aria-label="Perbesar foto 05, Pantulan">
+                            <span class="frame__media"><img src="assets/img/keola-05-sm.webp" srcset="assets/img/keola-05-sm.webp 600w, assets/img/keola-05.webp 780w" sizes="(min-width: 900px) 28vw, 88vw" width="780" height="1040" alt="Keola berfoto di cermin berbingkai kayu" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>05</span>Pantulan</p>
+                    </li>
+                    <li class="frame frame--wide" style="--avg:#c4bcb8">
+                        <button class="frame__btn" type="button" data-index="5" data-cursor aria-label="Perbesar foto 06, Manis">
+                            <span class="frame__media"><img src="assets/img/keola-06.webp" width="532" height="366" sizes="(min-width: 900px) 40vw, 88vw" alt="Keola tersenyum kecil dengan jari di bibir" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>06</span>Manis</p>
+                    </li>
+                    <li class="frame" style="--avg:#bb7156">
+                        <button class="frame__btn" type="button" data-index="6" data-cursor aria-label="Perbesar foto 07, Ceria">
+                            <span class="frame__media"><img src="assets/img/keola-07-sm.webp" srcset="assets/img/keola-07-sm.webp 600w, assets/img/keola-07.webp 1200w" sizes="(min-width: 900px) 28vw, 88vw" width="1200" height="1600" alt="Keola berpose di toko yang penuh warna" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>07</span>Ceria</p>
+                    </li>
+                    <li class="frame" style="--avg:#6e5f5b">
+                        <button class="frame__btn" type="button" data-index="7" data-cursor aria-label="Perbesar foto 08, Jenaka">
+                            <span class="frame__media"><img src="assets/img/keola-08-sm.webp" srcset="assets/img/keola-08-sm.webp 485w, assets/img/keola-08.webp 969w" sizes="(min-width: 900px) 28vw, 88vw" width="969" height="1600" alt="Keola dengan filter anak anjing" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>08</span>Jenaka</p>
+                    </li>
+                    <li class="frame" style="--avg:#605752">
+                        <button class="frame__btn" type="button" data-index="8" data-cursor aria-label="Perbesar foto 09, Lembut">
+                            <span class="frame__media"><img src="assets/img/keola-09-sm.webp" srcset="assets/img/keola-09-sm.webp 464w, assets/img/keola-09.webp 928w" sizes="(min-width: 900px) 28vw, 88vw" width="928" height="1599" alt="Swafoto Keola sambil berbaring" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>09</span>Lembut</p>
+                    </li>
+                    <li class="frame" style="--avg:#8b736d">
+                        <button class="frame__btn" type="button" data-index="9" data-cursor aria-label="Perbesar foto 10, Cahaya">
+                            <span class="frame__media"><img src="assets/img/keola-10-sm.webp" srcset="assets/img/keola-10-sm.webp 450w, assets/img/keola-10.webp 899w" sizes="(min-width: 900px) 28vw, 88vw" width="899" height="1599" alt="Potret Keola dengan rambut terurai" loading="lazy" decoding="async"></span>
+                        </button>
+                        <p class="frame__cap"><span>10</span>Cahaya</p>
+                    </li>
+                </ol>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Keola</h3>
-                <p>A celebration of beauty, elegance, and timeless romance.</p>
+                <div class="gallery__bar" aria-hidden="true"><span></span></div>
             </div>
-            
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#gallery">Gallery</a></li>
-                    <li><a href="#about">About</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Follow Me</h4>
-                <div class="social-links">
-                    <a href="https://instagram.com" target="_blank" title="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://facebook.com" target="_blank" title="Facebook">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="https://tiktok.com" target="_blank" title="TikTok">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
-                    <a href="https://youtube.com" target="_blank" title="YouTube">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="https://twitter.com" target="_blank" title="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
+        </section>
+
+        <!-- Interlude: Malam -->
+        <section class="film" id="malam" aria-label="Interlude: suatu malam">
+            <div class="film__sticky">
+                <div class="film__frame">
+                    <video class="film__video" muted loop playsinline preload="none" poster="assets/video/malam-poster.webp" aria-label="Video kenangan kita di suatu malam">
+                        <source data-src="assets/video/malam.mp4" type="video/mp4">
+                    </video>
+                    <div class="film__grade" aria-hidden="true"></div>
+                    <div class="film__text">
+                        <p class="chip">Suatu malam</p>
+                        <p class="film__line">Hal-hal sederhana,<br><em>yang ternyata paling kuingat.</em></p>
+                    </div>
+                    <button class="film__toggle" type="button" aria-pressed="false" aria-label="Putar video">
+                        <svg class="icon icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>
+                        <svg class="icon icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+                    </button>
                 </div>
             </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2026 Keola. All rights reserved. | Crafted with <span class="heart">💕</span> love</p>
-        </div>
-    </footer>
+        </section>
 
-    <script src="script.js"></script>
+        <!-- V. Tentang -->
+        <section class="about chapter" id="tentang" data-chapter="tentang" aria-labelledby="tentang-title" tabindex="-1">
+            <div class="about__grid">
+                <figure class="about__portrait">
+                    <div class="about__arch">
+                        <img src="assets/img/keola-10-sm.webp" srcset="assets/img/keola-10-sm.webp 450w, assets/img/keola-10.webp 899w" sizes="(min-width: 900px) 38vw, 80vw" width="899" height="1599" alt="Potret Keola dengan rambut terurai, tersenyum tipis" loading="lazy" decoding="async">
+                    </div>
+                    <figcaption>Keola</figcaption>
+                </figure>
+                <div class="about__copy">
+                    <p class="chip">Bab V — Tentang Keola</p>
+                    <h2 class="chapter__title split-reveal" id="tentang-title">Hati yang <em>tulus</em></h2>
+                    <p class="about__p line-reveal">Bagi Keola, kejujuran dan kepercayaan adalah bahasa cinta yang paling nyata. Ia sangat menjunjung tinggi sebuah komitmen, terutama dalam menjaga hubungan jarak jauh kita; baginya, kesetiaan adalah janji suci untuk saling mendekap hati meski raga sedang tak saling bersentuhan.</p>
+                    <p class="about__p line-reveal">Di balik sosoknya yang lembut, ia memiliki ketulusan luar biasa dalam melayani, membuktikan bahwa baginya hidup adalah tentang memberi dampak positif bagi sesama. Keola adalah bukti bahwa keindahan sejati muncul dari hati yang tulus, sebuah jiwa yang selalu memilih untuk tetap percaya dan berjuang demi orang yang ia cintai.</p>
+                    <svg class="about__flourish" viewBox="0 0 240 24" aria-hidden="true"><path d="M2 12h88c8 0 12-8 20-8s10 6 10 8-2 8-10 8-12-8-20-8M150 12h88"/><circle cx="120" cy="12" r="2.4"/></svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- VI. Fajar -->
+        <section class="dawn chapter" id="fajar" data-chapter="fajar" aria-labelledby="fajar-title" tabindex="-1">
+            <div class="dawn__sun" aria-hidden="true"></div>
+            <div class="dawn__copy">
+                <p class="chip chip--dawn">Bab VI — Fajar</p>
+                <h2 class="dawn__name script ink" id="fajar-title">Kei,</h2>
+                <p class="dawn__line">I love you more than words can say.</p>
+                <svg class="dawn__heart" viewBox="0 0 120 108" aria-hidden="true"><path d="M60 100C46 88 8 64 8 34 8 18 20 8 34 8c11 0 20 7 26 17 6-10 15-17 26-17 14 0 26 10 26 26 0 30-38 54-52 66z"/></svg>
+                <button class="btn btn--dawn" id="replay" type="button">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                    <span>Kembali ke senja</span>
+                </button>
+            </div>
+
+            <footer class="footer">
+                <svg class="footer__mark" viewBox="0 0 64 64" aria-hidden="true">
+                    <path d="M47.5 12.6A24 24 0 1 0 51.4 47"/>
+                    <path d="M25 18.5v27"/>
+                    <path d="M40.5 18.5c-4.6 6.2-9.4 10.6-15.2 13.6"/>
+                    <path d="M28.6 30.6c5 3.4 8.6 8.4 12.6 15"/>
+                </svg>
+                <p>Ditulis pelan-pelan, dengan sepenuh hati — untuk Keola.</p>
+                <p class="footer__meta">Lagu: <i>Firasat</i> — Marcell · 2026</p>
+                <p class="footer__motion" hidden><button class="link link--dawn" type="button" data-motion-toggle>Nyalakan animasi penuh</button></p>
+            </footer>
+        </section>
+    </main>
+
+    <!-- ===== Lightbox ===== -->
+    <dialog class="lightbox" id="lightbox" aria-label="Foto kenangan">
+        <figure class="lightbox__figure">
+            <img class="lightbox__img" src="" alt="">
+            <figcaption class="lightbox__cap"><span class="lightbox__num"></span><span class="lightbox__title"></span></figcaption>
+        </figure>
+        <button class="lightbox__btn lightbox__close" type="button" aria-label="Tutup foto">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <button class="lightbox__btn lightbox__prev" type="button" aria-label="Foto sebelumnya">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button class="lightbox__btn lightbox__next" type="button" aria-label="Foto berikutnya">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+    </dialog>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>
